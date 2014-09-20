@@ -1,0 +1,11 @@
+homework:
+  id: 1
+  name: Homework
+
+project:
+  id: 2
+  name: Project
+
+quiz:
+  id: 3
+  name: Quiz

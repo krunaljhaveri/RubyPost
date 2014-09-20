@@ -1,0 +1,29 @@
+vote1:
+  id: 1
+  user: user2
+  voteable_id: 1
+  voteable_type: Post
+
+vote2:
+  id: 2
+  user: user3
+  voteable_id: 1
+  voteable_type: Post
+
+vote3:
+  id: 3
+  user: user1
+  voteable_id: 2
+  voteable_type: Post
+
+vote4:
+  id: 4
+  user: user1
+  voteable_id: 1
+  voteable_type: Comment
+
+vote5:
+  id: 5
+  user: user3
+  voteable_id: 2
+  voteable_type: Comment

@@ -1,0 +1,17 @@
+<div class="page-header">
+  <h1>Active Posts
+    <a class="btn btn-large btn-default pull-right" href="<%= posts_path %>">Show all posts &rsaquo;&rsaquo;</a></h1>
+
+</div>
+<% if @posts.count > 0 %>
+    <% @posts.each do |post| %>
+        <%
+           post.title = truncate(post.title, length: 40, omission: '...')
+           post.content = truncate(post.content, length: 600, omission: '...');
+           post.tags = truncate(post.tags, length: 30, omission: ',')
+        %>
+        <%= render 'posts/template', :@post => post, :expanded => false %>
+    <% end %>
+<% else %>
+    <h4>No posts found.</h4>
+<% end %>

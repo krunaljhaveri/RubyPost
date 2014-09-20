@@ -1,0 +1,19 @@
+<div class="page-header">
+  <h1 class="wordwrap"><%= @post.title %></h1>
+</div>
+<%= render 'posts/template', :expanded => true %>
+<% @post.comments.each do |comment| %>
+    <%= render 'comments/template', :@comment => comment %>
+<% end %>
+<%
+   @comment = Comment.new
+   @comment.post = @post
+%>
+<% if user_signed_in? %>
+    <style>
+        #new_comment {
+            margin-left: -78px !important;
+        }
+    </style>
+    <%= render 'comments/form' %>
+<% end %>

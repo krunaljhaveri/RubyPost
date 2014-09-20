@@ -1,0 +1,11 @@
+comment1:
+  id: 1
+  post_id: 1
+  user_id: 6
+  content: Homework 1 is due on September 30th at 11:59pm.
+
+comment2:
+  id: 2
+  post_id: 3
+  user_id: 6
+  content: I have rectified the problem. Please check again.

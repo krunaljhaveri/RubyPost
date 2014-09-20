@@ -1,0 +1,60 @@
+<section>
+  <div class="row">
+    <div class="span1" style="padding-top: 10px; width: 83px;">
+      <a href="#" id="Post-<%= @post.id %>-VoteCount" class="btn icon-thumbs-up action-button" style="cursor:default; width: 57px;">&nbsp;<%= @post.vote_count %></a>
+      <% if can? :create, Vote.new(:voteable_id => @post.id, :voteable_type => 'Post', :user => current_user) %>
+          <a href="#" id="Post-<%= @post.id %>" class="btn btn-inverse vote-button" style="font-size: 15px; width: 57px;">Vote
+            up!</a>
+      <% end %>
+    </div>
+    <div class="span10 template-box" style="width: 792px; border: 1px solid #bbb; border-radius: 12px;">
+      <section class="post-title">
+        <div class="row">
+          <div class="span7">
+            <%= link_to @post do %>
+                <span class="icon-list-alt"></span>&nbsp;<%= truncate(@post.title, length: 40, omission: '...') %>
+            <% end %>
+          </div>
+          <div class="span2" style="text-align: right; width: 200px">
+            <% if @post.category %>
+                <%= link_to search_url('category', @post.category.name) do %>
+                    <span class="icon-folder-open"></span>&nbsp;<%= @post.category.name %>
+                <% end %>
+            <% else %>
+                <%= link_to search_url('category', 'Anonymous') do %>
+                    <span class="icon-folder-open"></span>&nbsp;Anonymous
+                <% end %>
+            <% end %>
+          </div>
+        </div>
+      </section>
+      <div class="wordwrap" style="min-height: 150px; padding: 12px 12px; width: 770px"><%= @post.content %></div>
+      <section style="padding: 10px; border-top: 1px solid #ccc; margin-bottom:22px; font-size: 12px" class="no-space">
+        <div class="span5">Last updated
+          by <%= @post.user ? (link_to @post.user.email, search_url('user', @post.user.email)) : 'Anonymous' %> <%= time_ago_in_words(@post.created_at) %>
+          ago
+        </div>
+        <div class="span4">Tags:
+          <% if @post.tags and @post.tags.length > 0 %>
+              <% @post.tags.split(",").each do |tag| %>
+                  <a class="btn btn-mini" href="<%= search_url('tags', tag) %>" title="<%= tag %>"><span class="icon-tag"></span>&nbsp;<%= truncate(tag, length: 10, omission: '...') %>
+                  </a>
+              <% end %>
+          <% else %>
+              None
+          <% end %>
+        </div>
+        <div class="span1" style="width: 80px;"><%= link_to pluralize(@post.comments.count, 'comment'), @post %></div>
+      </section>
+    </div>
+    <div class="span1" style="text-align: left; padding-top: 10px">
+      <% if can? :destroy, @post %>
+          <%= link_to '', @post, method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn icon-remove action-button' %>
+      <% end %>
+      <% if can? :update, @post %>
+          <%= link_to '', edit_post_path(@post), class: 'btn icon-pencil action-button' %>
+      <% end %>
+    </div>
+  </div>
+</section>
+<br/><br/>

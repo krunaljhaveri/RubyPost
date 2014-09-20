@@ -1,0 +1,74 @@
+<%= nav_bar :fixed => :top, :brand_link => root_path do %>
+    <a href="/" class="brand" style="background: url(/logo.png) no-repeat left center;">&nbsp;RubyPost</a>
+    <%= menu_group do %>
+        <%= menu_divider %>
+        <% if user_signed_in? %>
+            <%= menu_item "New Post", new_post_path %>
+            <% if current_user.admin or current_user.super_admin %>
+                <%= drop_down "Manage" do %>
+                    <%= menu_item "View Report", report_path %>
+                    <%= menu_item "Manage Users", users_manage_path %>
+                    <%= menu_item "Manage Posts", posts_manage_path %>
+                    <%= menu_item "Manage Categories", categories_path %>
+                <% end %>
+            <% end %>
+        <% end %>
+    <% end %>
+    <form id="search-form" class="navbar-search pull-left" method="get" action="<%= posts_path %>">
+      <input name="type" id="search-type" type="hidden" style="display:none" value="all"/>
+      <input name="query" id="search-query" type="text" class="search-query" placeholder="Search" value="<%= params[:query] %>" style="margin-right: 10px" data-toggle="tooltip" data-placement="bottom" data-original-title="Type your query and hit Enter or Select the type of search on the right."/>
+      <input name="" type="submit" style="display:none"/>
+    </form>
+    <div class="btn-group">
+      <button class="btn search-option">Search</button>
+      <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+      <ul class="dropdown-menu">
+        <li><a href="#" class="search-option">User</a></li>
+        <li><a href="#" class="search-option">Tags</a></li>
+        <li><a href="#" class="search-option">Content</a></li>
+        <li><a href="#" class="search-option">Category</a></li>
+      </ul>
+    </div>
+
+    <%= menu_group :pull => :right do %>
+        <% if current_user %>
+            <%= menu_item "Hi, #{current_user.email}" %>
+            <%= menu_divider %>
+            <%= menu_item "Sign Out", destroy_user_session_path, :method => :delete %>
+        <% else %>
+            <%= form_for :user, :url => session_path(:user), :html => {:class => "navbar-form pull-right"} do |f| -%>
+                <%= f.text_field :email, :placeholder => "Email", :style => "width: 150px;" %>
+                <%= f.password_field :password, :placeholder => "Password", :style => "width: 150px;" %>
+                <%= f.submit "Sign in", :class => "btn btn-primary" %>
+                <%= link_to "Sign up", new_user_registration_path, :class => "btn btn-primary" %>
+            <% end %>
+        <% end %>
+    <% end %>
+<% end %>
+
+<script>
+    $('.search-option').click(function (e) {
+        if (!$('#search-query').val())
+            return;
+        console.log($(this).attr('id'));
+        $('#search-type').val($(this).text().toLowerCase());
+        if ($(this).text().toLowerCase() === 'search')
+            $('#search-type').val('all');
+        $('#search-form').submit();
+    });
+    $('nav a').each(function () {
+        var nav = $(this);
+        if (nav.length > 0) {
+            if (nav.attr('href') == '#') {
+                $(this).click(
+                        function (e) {
+                            e.preventDefault();
+                        }
+                );
+            }
+        }
+    });
+    $('#search-query').focus(function () {
+        $('#search-query').tooltip('show')
+    });
+</script>

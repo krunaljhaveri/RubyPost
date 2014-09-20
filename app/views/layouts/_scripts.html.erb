@@ -1,0 +1,35 @@
+<script>
+    <% if user_signed_in? %>
+    $('.vote-button').click(function (e) {
+        e.preventDefault();
+        var id = e.target.id;
+        var params = id.split('-');
+        $('#' + id).hide();
+        $.post("<%= votes_path %>",
+                {"voteable_type": params[0], "voteable_id": params[1], "user_id": "<%= current_user.id %>"}
+        ).done(function () {
+                    $('#' + id + '-VoteCount').text(' ' + (parseInt($('#' + id + '-VoteCount').text()) + 1));
+                }).fail(function (a, b, c) {
+                    console.log(a, b, c);
+                });
+    });
+    <% end %>
+    $('.icon-thumbs-up').click(function (e) {
+        e.preventDefault();
+    });
+    $('.icon-pencil').mouseover(function () {
+        $(this).tooltip({placement: 'right',
+            title: 'Edit'});
+        $(this).tooltip('show');
+    });
+    $('.icon-remove').mouseover(function () {
+        $(this).tooltip({placement: 'right',
+            title: 'Delete'});
+        $(this).tooltip('show');
+    });
+    $('.icon-thumbs-up').mouseover(function () {
+        $(this).tooltip({placement: 'top',
+            title: 'Votes received'});
+        $(this).tooltip('show');
+    });
+</script>

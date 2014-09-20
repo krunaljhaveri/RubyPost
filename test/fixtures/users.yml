@@ -1,0 +1,38 @@
+super_admin:
+  id: 1
+  email: super_admin@ncsu.edu
+  encrypted_password: <%= User.new.send(:password_digest, '5uperpass') %>
+  super_admin: true
+
+admin1:
+  id: 2
+  email: admin1@ncsu.edu
+  encrypted_password: <%= User.new.send(:password_digest, 'admin1pass') %>
+  admin: true
+
+admin2:
+  id: 3
+  email: admin2@ncsu.edu
+  encrypted_password: <%= User.new.send(:password_digest, 'admin2pass') %>
+  admin: true
+
+admin3:
+  id: 4
+  email: admin3@ncsu.edu
+  encrypted_password: <%= User.new.send(:password_digest, 'admin3pass') %>
+  admin: true
+
+user1:
+  id: 5
+  email: user1@ncsu.edu
+  encrypted_password: <%= User.new.send(:password_digest, 'user1pass') %>
+
+user2:
+  id: 6
+  email: user2@ncsu.edu
+  encrypted_password: <%= User.new.send(:password_digest, 'user2pass') %>
+
+user3:
+  id: 7
+  email: user3@ncsu.edu
+  encrypted_password: <%= User.new.send(:password_digest, 'user3pass') %>

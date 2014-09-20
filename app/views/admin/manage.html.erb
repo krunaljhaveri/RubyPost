@@ -1,0 +1,60 @@
+<%- model_class = User -%>
+<div class="page-header">
+  <h1><%= t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th><%= model_class.human_attribute_name(:email) %></th>
+    <th style="text-align: center"><%= model_class.human_attribute_name(:admin) %></th>
+    <th style="text-align: center"><%= model_class.human_attribute_name(:super_admin) %></th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td style="text-align: center">
+          <% if user.admin %>
+              <span class="icon-ok manage-user-checkbox"/>
+          <% end %>
+        </td>
+        <td style="text-align: center">
+          <% if user.super_admin %>
+              <span class="icon-ok manage-user-checkbox"/>
+          <% end %>
+        </td>
+        <td>
+          <% if can? :manage, user %>
+              <% if user.admin and current_user.super_admin %>
+                  <span id="demote-<%= user.id %>" class="btn btn-mini btn-inverse update-role-button"  style="width: 39px">Demote</span>
+              <% elsif !user.admin %>
+                  <span id="promote-<%= user.id %>" class="btn btn-mini btn-primary update-role-button">Promote</span>
+              <% end %>
+              <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                          '/users/remove/' + user.id.to_s(),
+                          :method => :delete,
+                          :id => 'delete-' + user.id.to_s(),
+                          :data => {:confirm => t('.confirm', :default => 'All posts and comments by this user will be marked as Anonymous. Are you sure?')},
+                          :class => 'btn btn-mini btn-danger' %>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+
+<script>
+    $('.update-role-button').click(function (e) {
+        var id = e.target.id;
+        var params = id.split('-');
+        var admin_role = params[0] === 'promote' ? true : false;
+        $.post("/users/update-role/" + params[1], { admin_role: admin_role }).done(function () {
+            location.reload();
+        }).fail(function (a, b, c) {
+                    console.log(a, b, c);
+                });
+    });
+</script>

@@ -1,0 +1,21 @@
+<div class="page-header">
+  <% if params[:query] %>
+      <h3>Posts that contain <i>"<%= params[:query] %>"</i> in <i><%= params[:type] %></i> field(s)</h3>
+  <% else %>
+      <h1>All Posts
+        <a class="btn btn-large btn-default pull-right" href="<%= root_path %>">Show active posts &rsaquo;&rsaquo;</a>
+      </h1>
+  <% end %>
+</div>
+<% if @posts.count > 0 %>
+    <% @posts.each do |post| %>
+        <%
+           post.title = truncate(post.title, length: 40, omission: '...')
+           post.content = truncate(post.content, length: 600, omission: '...');
+           post.tags = truncate(post.tags, length: 30, omission: ',')
+        %>
+        <%= render 'posts/template', :@post => post, :expanded => false %>
+    <% end %>
+<% else %>
+    <h4>No such posts found.</h4>
+<% end %>

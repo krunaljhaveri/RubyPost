@@ -1,0 +1,23 @@
+post1:
+  id: 1
+  category_id: 1
+  title: Deadline for Homework 1
+  content: What is the deadline for Homework 1?
+  tags: homework1,deadline
+  user_id: 5
+
+post2:
+  id: 2
+  category_id: 2
+  title: Tutorial for Webrat
+  content: Hey, I found this short tutorial for Webrat @ http://railscasts.com/episodes/156-webrat
+  tags: project1,webrat,tutorial
+  user_id: 6
+
+post3:
+  id: 3
+  category_id: 3
+  title: Scores for Quiz 2
+  content: I cannot see my scores for Quiz 2 on WebAssign.
+  tags: scores,quiz2,webassign
+  user_id: 7
